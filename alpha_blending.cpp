@@ -1,3 +1,5 @@
+//#define SFML
+
 #include "alpha_blending.hpp"
 
 void alpha_blending (const char* name_picture_back, const char* name_picture_front, 
