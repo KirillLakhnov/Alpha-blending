@@ -53,7 +53,7 @@ void set_alpha_blending_sse (const sf::Color* Back, const sf::Color* Front, sf::
         __m128i alpha_shuffle_mask = _mm_set_epi8(ZERO, 14, ZERO, 14, ZERO, 14, ZERO, 14,
                                                   ZERO, 6,  ZERO, 6,  ZERO, 6,  ZERO, 6);
         __m128pixel alpha = {_mm_shuffle_epi8(front.pixelL, alpha_shuffle_mask),
-                            _mm_shuffle_epi8(front.pixelH, alpha_shuffle_mask)};
+                             _mm_shuffle_epi8(front.pixelH, alpha_shuffle_mask)};
 
         //========================================================================================
         // front.pixelL

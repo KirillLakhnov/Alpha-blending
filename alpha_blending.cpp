@@ -137,3 +137,4 @@ int read_file(FILE* file, sf::Uint8** buf)
 
     return fread(*buf, sizeof(sf::Uint8), file_len, file);
 }
+
