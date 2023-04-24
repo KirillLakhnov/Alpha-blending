@@ -73,7 +73,6 @@ for (int i = 0; i < n_pixels; i += 4)
                         (__m128i) _mm_movehl_ps((__m128) _mm_set1_epi8(0), (__m128) front.pixelL)};
     __m128pixel back = {_mm_load_si128((__m128i*)(Back + i)),
                        (__m128i) _mm_movehl_ps((__m128) _mm_set1_epi8(0), (__m128) back.pixelL)};
-
     //================================================================================
     // front.pixelL 
     // [15] [14] [13] [12] [11] [10] [09] [08] [07] [06] [05] [04] [03] [02] [01] [00]
@@ -93,7 +92,6 @@ for (int i = 0; i < n_pixels; i += 4)
 
     back.pixelL = _mm_cvtepu8_epi16(back.pixelL);
     back.pixelH = _mm_cvtepu8_epi16(back.pixelH);
-
     //================================================================================
     // alpha.pixelL
     // [15] [14] [13] [12] [11] [10] [09] [08] [07] [06] [05] [04] [03] [02] [01] [00]
@@ -108,7 +106,6 @@ for (int i = 0; i < n_pixels; i += 4)
                                               ZERO, 6,  ZERO, 6);
     __m128pixel alpha = {_mm_shuffle_epi8(front.pixelL, alpha_shuffle_mask),
                          _mm_shuffle_epi8(front.pixelH, alpha_shuffle_mask)};
-
     //========================================================================================
     // front.pixelL
     // [15] [14] [13] [12] [11] [10] [09] [08] [07] [06] [05] [04] [03] [02] [01] [00]
@@ -128,7 +125,6 @@ for (int i = 0; i < n_pixels; i += 4)
 
     back.pixelL = _mm_mullo_epi16(back.pixelL, _mm_sub_epi16(_mm_set1_epi16(255), alpha.pixelL));
     back.pixelH = _mm_mullo_epi16(back.pixelH, _mm_sub_epi16(_mm_set1_epi16(255), alpha.pixelH));
-
     //================================================================================
     // sum.pixelL
     // [15] [14] [13] [12] [11] [10] [09] [08] [07] [06] [05] [04] [03] [02] [01] [00]
@@ -139,7 +135,6 @@ for (int i = 0; i < n_pixels; i += 4)
     //================================================================================
      __m128pixel sum = {_mm_add_epi16(front.pixelL, back.pixelL),   
                         _mm_add_epi16(front.pixelH, back.pixelH)};
-
     //=======================================================================================================
     // sum.pixelL
     //  [15]   [14]   [13]   [12]   [11]   [10]   [09]   [08]  [07]  [06]  [05]  [04]  [03]  [02]  [01]  [00]
@@ -155,7 +150,6 @@ for (int i = 0; i < n_pixels; i += 4)
 
     sum.pixelL = _mm_shuffle_epi8(sum.pixelL, sum_shuffle_mask);
     sum.pixelH = _mm_shuffle_epi8(sum.pixelH, sum_shuffle_mask);
-
     //================================================================================
     // screen
     // [15] [14] [13] [12] [11] [10] [09] [08] [07] [06] [05] [04] [03] [02] [01] [00]
