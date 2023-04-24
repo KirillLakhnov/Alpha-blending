@@ -189,13 +189,10 @@ for (int i = 0; i < n_pixels; i += 4)
     - https://ru.wikipedia.org/wiki/SIMD
     - https://www.laruence.com/sse
 
-2. Alpha-Blending:
-    - https://ru.wikipedia.org/wiki/Альфа-канал
+2. Alpha Blending:
+    - https://ru.wikipedia.org/wiki/Множество_Мандельброта
 
-3. BMP files
-    - https://ru.wikipedia.org/wiki/BMP
-
-4. SFML
+3. SFML:
     - https://www.sfml-dev.org/
     - https://ru.wikipedia.org/wiki/SFML
     - https://ps-group.github.io/ps1/lesson_sfml_1
