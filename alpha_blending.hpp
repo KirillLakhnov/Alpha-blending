@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <time.h>
 
 #include <SFML/Graphics.hpp>
 
@@ -56,7 +57,7 @@ void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* s
 
 void pixel_image_ctor(struct pixel_image* img, const char* img_name);
 
-void pixel_image_create_from_pixels (struct pixel_image* img, int width, int height, const sf::Uint8* pixels);
+void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width, int height, const sf::Uint8* pixels);
 
 int read_file(FILE* file, sf::Uint8** buf);
 

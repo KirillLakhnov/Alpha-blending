@@ -2,6 +2,10 @@
 
 void set_alpha_blending_no_o (const sf::Color* Back, const sf::Color* Front, sf::Color* Screen, const int n_pixels)
 {
+    assert (Back);
+    assert (Front);
+    assert (Screen);
+    
     // color = front_color * front_alpha + back_color * (255 - front_alpha) >> 8
 
     for (int i = 0; i < n_pixels; i++)

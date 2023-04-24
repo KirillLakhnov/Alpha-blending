@@ -5,6 +5,9 @@
 void alpha_blending (const char* name_picture_back, const char* name_picture_front, 
                      void (*set_alpha_blending) (const sf::Color*, const sf::Color*, sf::Color*, const int))
 {
+    assert (name_picture_back);
+    assert (name_picture_front);
+
     sf::RenderWindow window (sf::VideoMode(WIDTH, HEIGTH), "Alpha blending");
 
     struct pixel_image table_img = {};
@@ -18,7 +21,7 @@ void alpha_blending (const char* name_picture_back, const char* name_picture_fro
     pixel_image_create_from_pixels (&cat_alligned_img, table_img.width, table_img.height, cat_alligned_img_pixels);
     
     sf::Uint8* screen_img_pixels = (sf::Uint8*) calloc (table_img.width*table_img.height*4, sizeof (sf::Uint8));
-    struct pixel_image screen_img = {};
+    volatile struct pixel_image screen_img = {};
     pixel_image_create_from_pixels (&screen_img, table_img.width, table_img.height, screen_img_pixels);
 
     allign_pixel_image (&cat_alligned_img, &cat_img, IMP_X, IMP_Y);
@@ -76,15 +79,6 @@ void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* s
     assert (alligned_img);
     assert (source_img);
 
-    /*if ((x < 0) || (y < 0) ||
-        (x > alligned_img->width) || (y > alligned_img->height) ||
-        (alligned_img->width - x < source_img->width) ||
-        (alligned_img->height - y < source_img->height))
-    {
-        printf("CAN'T ALLIGN IMAGES(((\n");
-        return;
-    }*/
-
     sf::Color* alligned_pixels = (sf::Color*) alligned_img->pixels;
     sf::Color* source_pixels = (sf::Color*) source_img->pixels;
 
@@ -117,7 +111,7 @@ void pixel_image_ctor(struct pixel_image* img, const char* img_name)
 	img->n_pixels = img->width * img->height;
 }
 
-void pixel_image_create_from_pixels (struct pixel_image* img, int width, int height, const sf::Uint8* pixels)
+void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width, int height, const sf::Uint8* pixels)
 {
     assert (pixels);
     assert (img);
@@ -137,6 +131,6 @@ int read_file(FILE* file, sf::Uint8** buf)
     size_t file_len = ftell(file);
     fseek(file, 0L, SEEK_SET);
 
-    return fread(*buf, sizeof(sf::Uint8), file_len, file);
+    return fread (*buf, sizeof(sf::Uint8), file_len, file);
 }
 
