@@ -22,7 +22,6 @@ struct pixel_image {
     int              n_pixels;
 };
 
-
 class FPS
 {
     private:
@@ -53,12 +52,12 @@ class FPS
 void alpha_blending (const char* name_picture_back, const char* name_picture_front, 
                      void (*set_alpha_blending) (const sf::Color*, const sf::Color*, sf::Color*, const int));
 
-void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* source_img, int x, int y);
+inline void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* source_img, int x, int y);
 
-void pixel_image_ctor(struct pixel_image* img, const char* img_name);
+inline void pixel_image_ctor(struct pixel_image* img, const char* img_name);
 
-void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width, int height, const sf::Uint8* pixels);
+inline void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width, int height, const sf::Uint8* pixels);
 
-int read_file(FILE* file, sf::Uint8** buf);
+inline int read_file(FILE* file, sf::Uint8** buf);
 
 #endif //ALPHA_BLENDING

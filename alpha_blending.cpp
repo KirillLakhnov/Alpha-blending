@@ -8,8 +8,6 @@ void alpha_blending (const char* name_picture_back, const char* name_picture_fro
     assert (name_picture_back);
     assert (name_picture_front);
 
-    sf::RenderWindow window (sf::VideoMode(WIDTH, HEIGTH), "Alpha blending");
-
     struct pixel_image table_img = {};
     pixel_image_ctor (&table_img, name_picture_back);
 
@@ -26,6 +24,12 @@ void alpha_blending (const char* name_picture_back, const char* name_picture_fro
 
     allign_pixel_image (&cat_alligned_img, &cat_img, IMP_X, IMP_Y);
 
+    FPS fps;
+    char fps_buffer[10];
+
+#ifndef NO_DRAW_MODE
+    sf::RenderWindow window (sf::VideoMode(WIDTH, HEIGTH), "Alpha blending");
+
     sf::Texture texture;
     texture.loadFromImage (table_img.image);
     sf::Sprite sprite (texture);
@@ -39,9 +43,6 @@ void alpha_blending (const char* name_picture_back, const char* name_picture_fro
     text_fps.setCharacterSize (40);
     text_fps.setColor (sf::Color (20, 250, 20));
     text_fps.setStyle (sf::Text::Bold);
-
-    FPS fps;
-    char fps_buffer[10];
 
     while (window.isOpen())
     {
@@ -72,9 +73,26 @@ void alpha_blending (const char* name_picture_back, const char* name_picture_fro
         window.draw(text_fps);
         window.display();
     }
+#endif
+
+#ifdef NO_DRAW_MODE
+    float fps_average = 0;
+
+    for (int i = 0; i < 1000; i++)
+    {
+        fps.update ();
+        set_alpha_blending ((sf::Color*) table_img.pixels, (sf::Color*) cat_alligned_img.pixels, (sf::Color*) screen_img.pixels, table_img.n_pixels);
+
+        fps_average += fps.getFPS();
+    }
+
+    fps_average = fps_average/1000.;
+
+    printf ("%.2f", fps_average);
+#endif
 }
 
-void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* source_img, int x, int y)
+inline void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* source_img, int x, int y)
 {
     assert (alligned_img);
     assert (source_img);
@@ -99,7 +117,7 @@ void allign_pixel_image (struct pixel_image* alligned_img, struct pixel_image* s
     }
 }
 
-void pixel_image_ctor(struct pixel_image* img, const char* img_name)
+inline void pixel_image_ctor(struct pixel_image* img, const char* img_name)
 {
 	assert (img_name);
     assert (img);
@@ -111,7 +129,7 @@ void pixel_image_ctor(struct pixel_image* img, const char* img_name)
 	img->n_pixels = img->width * img->height;
 }
 
-void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width, int height, const sf::Uint8* pixels)
+inline void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width, int height, const sf::Uint8* pixels)
 {
     assert (pixels);
     assert (img);
@@ -122,7 +140,7 @@ void pixel_image_create_from_pixels (volatile struct pixel_image* img, int width
     img->pixels   = pixels;
 }
 
-int read_file(FILE* file, sf::Uint8** buf)
+inline int read_file(FILE* file, sf::Uint8** buf)
 {
     assert (buf);
     assert (file);
